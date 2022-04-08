@@ -3,3 +3,9 @@ body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
 }
+
+a {
+  color: inherit;
+  text-decoration: inherit;
+  cursor: inherit;
+}
