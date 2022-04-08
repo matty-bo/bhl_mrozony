@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import React, { useCallback, useContext, useRef, useState } from "react";
 import { appContext } from "../../contexts/AppContext";
+import logo from "../assets/logo.png";
 
 export function Login() {
   const identifierRef = useRef(null);
@@ -35,7 +36,7 @@ export function Login() {
     setMessage(undefined);
 
     const credentials = { identifier, password };
-// TODO: SEND LOGIN REQUEST
+    // TODO: SEND LOGIN REQUEST
     setLogin(true);
   }, [setLogin, setMessage]);
 
@@ -51,7 +52,9 @@ export function Login() {
     >
       <Container maxWidth="xs">
         <Paper elevation={15}>
-          <Box sx={{ height: "200px" }}>tfghb</Box>
+          <Box sx={{ height: "200px", display: "flex", justifyContent: "center" }}>
+            <img src={logo} alt="Logo" style={{"height": "200px"}} />
+          </Box>
           <Box sx={{ padding: "0 10px" }}>
             <FormControl fullWidth sx={{ padding: "25px 0", gap: "12px" }}>
               <TextField
