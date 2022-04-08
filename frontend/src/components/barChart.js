@@ -16,7 +16,7 @@ const toHour = (value) => {
 export const DashboardBarChart = () => {
   return(
     <Chart
-      style={{ backgroundColor: '#ffffff', borderRadius: '8px', marginTop: '8px', padding: '4px' }}
+      style={{ backgroundColor: '#ffffff', borderRadius: '8px' }}
       type='bar'
       data={{
         labels: [...new Array(24)].map((el, i) => `${ toHour(i) }`),

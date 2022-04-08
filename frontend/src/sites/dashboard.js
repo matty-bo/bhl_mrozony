@@ -5,7 +5,7 @@ import { InfoBox } from '../components/infoBox';
 export const Dashboard = () => {
   return(
     <Box>
-      <InfoBox></InfoBox>
+      <InfoBox contentType='barChart'></InfoBox>
       <InfoBox></InfoBox>
       <InfoBox></InfoBox>
     </Box>
