@@ -1,24 +1,20 @@
-import * as React from 'react';
-import {
-   AppBar,
-   Box,
-   Toolbar,
-   IconButton,
-   Typography,
-   Badge,
-   MenuItem,
-   Menu
-} from '@mui/material'
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
-import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import {
+  AppBar, Badge, Box, IconButton, Menu, MenuItem, Toolbar, Typography
+} from '@mui/material';
+import React, { useCallback } from 'react';
 import { Link } from 'react-router-dom';
+import { appContext } from '../contexts/AppContext';
 
 
 export const NavigationBar = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+
+  const { logout } = React.useContext(appContext);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -35,6 +31,10 @@ export const NavigationBar = () => {
     setAnchorEl(null);
     handleMobileMenuClose();
   };
+
+  const handleLogout = useCallback(() => {
+    logout();
+  }, [logout])
 
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
@@ -59,6 +59,7 @@ export const NavigationBar = () => {
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={handleLogout}>Log out</MenuItem>
     </Menu>
   );
 
