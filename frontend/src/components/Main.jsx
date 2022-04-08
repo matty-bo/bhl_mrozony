@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import { Dashboard } from "../sites/dashboard";
+import { Dashboard } from "../sites/dashboard/dashboard";
 import { NavigationBar } from "./navbar";
 
 export function Main() {

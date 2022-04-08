@@ -1,7 +1,8 @@
 import React from 'react';
 import { Chart as ChartJS, registerables } from 'chart.js';
 import { Chart } from "react-chartjs-2";
-import { toHour } from '../utils/hours';
+import { toHour } from '../../utils/hours';
+import { chartStyle } from './barChart.styles';
 ChartJS.register(...registerables);
 
 const dataToColors = (data) => {
@@ -13,7 +14,7 @@ export const DashboardBarChart = () => {
 
   return(
     <Chart
-      style={{ backgroundColor: '#ffffff', borderRadius: '8px' }}
+      style={chartStyle}
       type='bar'
       data={{
         labels: [...new Array(24)].map((el, i) => `${ toHour(i) }`),

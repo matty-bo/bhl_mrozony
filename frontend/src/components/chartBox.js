@@ -1,8 +1,7 @@
 import React from 'react';
 import { Box, Typography } from '@mui/material';
-import { DashboardBarChart } from './barChart';
-import { LineChart } from './lineChart';
-import { toPrecision } from '../utils/precision';
+import { DashboardBarChart } from './barChart/barChart';
+import { LineChart } from './lineChart/lineChart';
 
 // TODO: remove mocked data
 const getInitialValue = () => 8 + Math.random() * 20;
@@ -25,7 +24,7 @@ const InfoBoxTitle = (props) => {
   );
 }
 
-const DailyUsageInfo = (props) => {
+const UsageInfo = (props) => {
   const {averageValue, averageRegionValue, averageUserValue} = props;
 
   return (
@@ -43,9 +42,9 @@ const DailyUsageInfo = (props) => {
   );
 }
 
-export const InfoBox = (props) => {
+export const ChartBox = (props) => {
   const initialValue = getInitialValue();
-  const {contentType} = props;
+  const {barChart, lineChart} = props;
 
   return(
     <Box sx={{
@@ -59,41 +58,41 @@ export const InfoBox = (props) => {
       width: '100%'
     }}>
       <InfoBoxTitle label='Zużycie wody'></InfoBoxTitle>
-      <Box sx={{ display: 'flex', paddingTop: '10px' }}>
+      {barChart && <Box sx={{ display: 'flex', paddingTop: '10px' }}>
         <Box sx={{
           width: '50%'
         }}>
-          { contentType === 'barChart' && <DashboardBarChart></DashboardBarChart> }
+          <DashboardBarChart></DashboardBarChart>
         </Box>
         <Box sx={{
           width: '50%',
           paddingLeft: '20px'
         }}>
-          <DailyUsageInfo
+          <UsageInfo
             averageUserValue={initialValue}
             averageValue={getNextValue(initialValue)}
             averageRegionValue={getNextValue(initialValue)}>
-          </DailyUsageInfo>
+          </UsageInfo>
         </Box>
-      </Box>
+      </Box>}
 
-      <Box sx={{ display: 'flex', paddingTop: '10px' }}>
+      { lineChart && <Box sx={{ display: 'flex', paddingTop: '10px' }}>
         <Box sx={{
           width: '50%'
         }}>
-          { contentType === 'barChart' && <LineChart></LineChart> }
+          <LineChart></LineChart>
         </Box>
         <Box sx={{
           width: '50%',
           paddingLeft: '20px'
         }}>
-          <DailyUsageInfo
+          <UsageInfo
             averageUserValue={initialValue}
             averageValue={getNextValue(initialValue)}
             averageRegionValue={getNextValue(initialValue)}>
-          </DailyUsageInfo>
+          </UsageInfo>
         </Box>
-      </Box>
+      </Box>}
     </Box>
   );
 }

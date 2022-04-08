@@ -1,10 +1,11 @@
 import React from 'react'
 import { Chart } from "react-chartjs-2";
+import { chartStyle } from './lineChart.styles';
 
 export const LineChart = () => {
   return(
     <Chart
-      style={{ backgroundColor: '#ffffff', borderRadius: '8px' }}
+      style={chartStyle}
       type='line'
       data={{
         labels: [...new Array(31)].map((el, i) => `${ i }`),
