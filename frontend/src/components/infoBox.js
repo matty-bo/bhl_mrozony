@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Typography } from '@mui/material';
+import { Box, Container, Typography } from '@mui/material';
 import { DashboardBarChart } from './barChart';
 
 const InfoBoxTitle = (props) => {
@@ -8,6 +8,7 @@ const InfoBoxTitle = (props) => {
   return (
     <Typography sx={{
       fontSize: '1.05em',
+      fontWeight: 'bold',
       textTransform: 'uppercase',
       borderColor: '#ffffff',
       borderBottom: 'solid 2px',
@@ -18,7 +19,19 @@ const InfoBoxTitle = (props) => {
   );
 }
 
-export const InfoBox = () => {
+const DailyUsageInfo = (props) => {
+  return (
+    <Box>
+      <Typography sx={{ fontWeight: 'bolder' }}>
+        Średnie zużycie godzinowe: 18.5
+      </Typography>
+    </Box>
+  );
+}
+
+export const InfoBox = (props) => {
+  const {contentType} = props;
+
   return(
     <Box sx={{
       color: '#ffffff',
@@ -30,7 +43,19 @@ export const InfoBox = () => {
       padding: '15px'
     }}>
       <InfoBoxTitle label='Zużycie wody'></InfoBoxTitle>
-      <DashboardBarChart></DashboardBarChart>
+      <Box sx={{ display: 'flex', paddingTop: '10px' }}>
+        <Box sx={{
+          width: '50%'
+        }}>
+          { contentType === 'barChart' && <DashboardBarChart></DashboardBarChart> }
+        </Box>
+        <Box sx={{
+          width: '50%',
+          paddingLeft: '20px'
+        }}>
+          <DailyUsageInfo></DailyUsageInfo>
+        </Box>
+      </Box>
     </Box>
   );
 }
