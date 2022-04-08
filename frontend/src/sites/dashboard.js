@@ -1,8 +1,13 @@
 import React from 'react';
-import Box from '@mui/material/Box';
+import { Box } from '@mui/system';
+import { InfoBox } from '../components/infoBox';
 
 export const Dashboard = () => {
   return(
-    <Box></Box>
+    <Box>
+      <InfoBox></InfoBox>
+      <InfoBox></InfoBox>
+      <InfoBox></InfoBox>
+    </Box>
   );
 }
