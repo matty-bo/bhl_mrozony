@@ -14,6 +14,18 @@ export function Main() {
           path="/dashboard"
           element={<Dashboard></Dashboard>}
         ></Route>
+
+        <Route
+          exact
+          path="/regionData"
+          element={<Dashboard></Dashboard>}
+        ></Route>
+
+        <Route
+          exact
+          path="/waterQuality"
+          element={<Dashboard></Dashboard>}
+        ></Route>
       </Routes>
     </BrowserRouter>
   );
