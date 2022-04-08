@@ -1,12 +1,12 @@
 const mockData = {
   0: {
-    placeID: 0,
+    name: "kitchen",
   },
   1: {
-    placeID: 0,
+    name: "dining room",
   },
   2: {
-    placeID: 0,
+    name: "bedroom",
   },
 };
 

@@ -1,7 +1,7 @@
-const watermetersData = require("./data/watermeters");
+const measurements = require("./data/measurements");
 
 const getWaterMeterData = (waterMeterID, dateFilterInfo) => {
-  let data = watermetersData.mockData;
+  let data = measurements.mockData;
   let dataArray = Object.values(data);
 
   dataArray = dataArray.filter((entry) => entry.waterMeterID == waterMeterID);
