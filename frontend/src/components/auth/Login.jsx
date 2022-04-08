@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useCallback, useContext, useRef, useState } from "react";
-import { appContext } from "../contexts/AppContext";
+import { appContext } from "../../contexts/AppContext";
 
 export function Login() {
   const identifierRef = useRef(null);
@@ -37,7 +37,7 @@ export function Login() {
     const credentials = { identifier, password };
 // TODO: SEND LOGIN REQUEST
     setLogin(true);
-  }, [setMessage]);
+  }, [setLogin, setMessage]);
 
   return (
     <div

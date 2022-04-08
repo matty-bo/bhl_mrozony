@@ -1,13 +1,11 @@
-import React, { useContext } from "react";
-import { Login } from "./components/Login";
-import { appContext, AppContextProvider } from "./contexts/AppContext";
+import React from 'react';
+import { AppView } from './components/AppView';
+import { AppContextProvider } from './contexts/AppContext';
 
 function App() {
-  const { loggedIn } = useContext(appContext);
-
   return (
     <AppContextProvider>
-      {loggedIn ? <Login /> : <Login />}
+      <AppView />
     </AppContextProvider>
   )
 }
