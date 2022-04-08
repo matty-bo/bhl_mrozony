@@ -1,30 +1,21 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { Dashboard } from "../sites/dashboard";
 import { NavigationBar } from "./navbar";
 
 export function Main() {
   return (
     <BrowserRouter>
-      <NavigationBar></NavigationBar>
+      <NavigationBar />
 
       <Routes>
+        <Route exact path="/dashboard" element={<Dashboard />}></Route>
+        <Route exact path="/regionData" element={<Dashboard />}></Route>
+        <Route exact path="/waterQuality" element={<Dashboard />}></Route>
         <Route
           exact
-          path="/dashboard"
-          element={<Dashboard></Dashboard>}
-        ></Route>
-
-        <Route
-          exact
-          path="/regionData"
-          element={<Dashboard></Dashboard>}
-        ></Route>
-
-        <Route
-          exact
-          path="/waterQuality"
-          element={<Dashboard></Dashboard>}
+          path="/"
+          element={<Navigate replace to="/dashboard" />}
         ></Route>
       </Routes>
     </BrowserRouter>
