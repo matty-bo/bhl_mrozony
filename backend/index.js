@@ -3,12 +3,12 @@ const cors = require("cors");
 const db = require("./db");
 
 const app = express();
-app.use(cors(corsOptions));
-app.use(express.json());
-
 const corsOptions = {
   origin: "*",
 };
+app.use(cors(corsOptions));
+app.use(express.json());
+
 
 app.get("/", (req, res) => {
   res.send("Lubię wodociągi :)");
