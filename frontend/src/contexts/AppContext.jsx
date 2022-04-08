@@ -2,7 +2,8 @@ import React, { createContext, useCallback, useState } from "react";
 
 const defaultValue = {
   loggedIn: false,
-  setLogin: () => {},
+  setLogin: () => void 0,
+  logout: () => void 0,
 };
 
 export const appContext = createContext(defaultValue);
@@ -16,5 +17,9 @@ export function AppContextProvider({ children }) {
     setLoggedIn(true);
   }, [setLoggedIn]);
 
-  return <Provider value={{ loggedIn, setLogin }}>{children}</Provider>;
+  const logout = useCallback(() => {
+    setLoggedIn(false);
+  }, [setLoggedIn]);
+
+  return <Provider value={{ loggedIn, setLogin, logout }}>{children}</Provider>;
 }
