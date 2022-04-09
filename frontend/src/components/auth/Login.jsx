@@ -52,8 +52,10 @@ export function Login() {
     >
       <Container maxWidth="xs">
         <Paper elevation={15}>
-          <Box sx={{ height: "200px", display: "flex", justifyContent: "center" }}>
-            <img src={logo} alt="Logo" style={{"height": "200px"}} />
+          <Box
+            sx={{ height: "200px", display: "flex", justifyContent: "center" }}
+          >
+            <img src={logo} alt="Logo" style={{ height: "200px" }} />
           </Box>
           <Box sx={{ padding: "0 10px" }}>
             <FormControl fullWidth sx={{ padding: "25px 0", gap: "12px" }}>
@@ -78,8 +80,10 @@ export function Login() {
               )}
               <Button
                 variant="contained"
-                color="primary"
-                sx={{ m: "50px 0 1px 0" }}
+                sx={{
+                  m: "50px 0 1px 0",
+                  background: (theme) => `${theme.palette.primary.main}`,
+                }}
                 onClick={handleLogin}
               >
                 Login
