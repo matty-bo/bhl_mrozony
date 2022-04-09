@@ -6,7 +6,6 @@ name = "pypi"
 [packages]
 fastapi = "*"
 uvicorn = "*"
-databases = {extras = ["sqlite"], version = "*"}
 
 [dev-packages]
 
