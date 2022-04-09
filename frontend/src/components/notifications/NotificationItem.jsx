@@ -3,7 +3,7 @@ import React from "react";
 
 export function Notification(params) {
   const {notification} = params;
-  const {data, title} = notification;
+  const {data, date, title} = notification;
 
   return (<Box sx={{
     borderRadius: '8px',
@@ -13,7 +13,10 @@ export function Notification(params) {
     margin: '15px',
     padding: '15px'
   }}>
-    <Typography sx={{fontWeight: 'bolder', paddingBottom: '5px'}}>{title}</Typography>
+    <Box sx={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '10px' }}>
+      <Typography sx={{fontWeight: 'bolder'}}>{title}</Typography>
+      <Typography sx={{fontWeight: 'bolder', paddingRight: '20px'}}>{date}</Typography>
+    </Box>
     <Typography>{data}</Typography>
   </Box>);
 
