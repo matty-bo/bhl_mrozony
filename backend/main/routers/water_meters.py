@@ -1,12 +1,12 @@
-from functools import reduce
 from statistics import mean
 from fastapi import APIRouter
 from typing import List, Optional
-from datetime import date, time
+from datetime import date
 from calendar import monthrange
-from ..models.water_meters import Measurement, Watermeter
+from ..models.water_meters import Watermeter
 from ..data import generator
 from copy import deepcopy
+import random
 
 
 router = APIRouter(
@@ -64,14 +64,11 @@ def filter_measurements_by_date(
         measurements = [dict(entry) for entry in measurements
                         if get_date_from_string(entry.date) == date(year, month, day)]
 
-    # measurements_mean = mean(m.usage for m in measurements)
-    print(measurements[0])
     measurements_mean = mean(dict(m)['usage'] for m in measurements)
-    # measurements_mean = 10
     measurements = {
         'usage_mean': measurements_mean,
-        'region_usage_mean': measurements_mean + 3,
-        'global_usage_mean': measurements_mean + 1,
+        'region_usage_mean': measurements_mean + random.random() * 3,
+        'global_usage_mean': measurements_mean + random.random(),
         'usages': measurements
     }
     return measurements
