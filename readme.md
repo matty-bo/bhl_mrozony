@@ -2,16 +2,16 @@
 
 ## Run backend
 ```
-node.js backend/index.js
-```
-
-### Or run live version (npm install nodemon -g)
-```
-nodemon backend/index.js
+cd backend
+pipenv install
+pipenv shell
+uvicorn main.app:app --reload
 ```
 
 
 ## Run frontend
 ```
-TODO: setup frontend
+npm install
+npm run build
+npm start
 ```
