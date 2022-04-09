@@ -35,6 +35,14 @@ export const MainListItems = () => (
         <ListItemText primary="Jakość Wody" />
       </ListItemButton>
     </Link>
+    <Link to='/spongeHouse'>
+      <ListItemButton>
+        <ListItemIcon>
+          <LayersIcon />
+        </ListItemIcon>
+        <ListItemText primary="Sponge House" />
+      </ListItemButton>
+    </Link>
     <div style={{ flex: 1 }}></div>
     <Link to='/notifications'>
       <ListItemButton>
