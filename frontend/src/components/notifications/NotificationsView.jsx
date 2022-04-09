@@ -2,7 +2,7 @@ import { Box, Typography } from "@mui/material";
 import React from "react";
 import { Notification } from "./NotificationItem";
 
-const notifications = [
+export const notifications = [
   {
     title: "Przerwy w dostawie wody",
     data: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sem mauris, viverra at diam a, suscipit commodo urna. Etiam rhoncus ornare rutrum. Etiam in nisl posuere, condimentum orci id, semper nisi. Phasellus posuere sem id est ornare, laoreet finibus diam dignissim. Mauris vulputate blandit est, nec auctor metus venenatis vitae. Morbi maximus bibendum diam, ac lacinia est viverra vel. Pellentesque quis vulputate libero. Sed ultricies, urna id tincidunt mattis, dolor sem auctor leo, eu faucibus urna ex at erat. Mauris sed urna sem.",

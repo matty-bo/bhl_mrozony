@@ -8,16 +8,18 @@ import {
 import React, { useCallback, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { appContext } from '../contexts/AppContext';
+import { notifications } from './notifications/NotificationsView';
 
 
 export const NavigationBar = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
-  const [showNotificationPreview, setShowNotificationPreview] = useState(false);
+  const [notificationAnchorEl, setNotificationAnchorEl] = useState(null);
 
   const { logout } = React.useContext(appContext);
 
   const isMenuOpen = Boolean(anchorEl);
+  const isNotifMenuOpen = Boolean(notificationAnchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   const handleProfileMenuOpen = (event) => {
@@ -30,6 +32,7 @@ export const NavigationBar = () => {
 
   const handleMenuClose = () => {
     setAnchorEl(null);
+    setNotificationAnchorEl(null);
     handleMobileMenuClose();
   };
 
@@ -37,9 +40,9 @@ export const NavigationBar = () => {
     logout();
   }, [logout])
 
-  const handleToggleNotification = useCallback(() => {
-    setShowNotificationPreview(true);
-  }, [setShowNotificationPreview])
+  const handleToggleNotification = (event) => {
+    setNotificationAnchorEl(event.currentTarget)
+  }
 
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
@@ -66,21 +69,40 @@ export const NavigationBar = () => {
     </Menu>
   );
 
-  const title = "sdvskjvd";
-  const content = "dsvh sjkdnvls  vnlskf nblsrtf yg gy hgj hj jh jh jh hj  knbf";
   const maxTitleWordsCount = 20
   const maxContentWordsCount = 40;
+  const notifMenuId = 'notification-menu'
 
-  const notificationPreview = (
-    <Box>
-      <Typography>
-        {title.length > maxTitleWordsCount ? `${title.slice(0, maxTitleWordsCount)}...`
-          : title}
-      </Typography>
-      <Typography>{content.length > maxContentWordsCount ? `${content.slice(0, maxContentWordsCount)}...`
-        : content}
-      </Typography>
-    </Box>
+  const renderNotificationMenu = (
+    <Menu
+      anchorEl={notificationAnchorEl}
+      anchorOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      id={notifMenuId}
+      keepMounted
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      open={isNotifMenuOpen}
+      onClose={handleMenuClose}
+    >
+      {notifications.slice(0,3).map((notif, i) => 
+        <MenuItem>
+          <Box>
+            <Typography sx={{ fontWeight: '600' }}>
+              {notif.title.length > maxTitleWordsCount ? `${notif.title.slice(0, maxTitleWordsCount)}...`
+                : notif.title}
+            </Typography>
+            <Typography sx={{ fontWeight: '200', fontSize: '.9em' }}>{notif.data.length > maxContentWordsCount ? `${notif.data.slice(0, maxContentWordsCount)}...`
+              : notif.data}
+            </Typography>
+          </Box>
+        </MenuItem>
+      )}
+    </Menu>
   );
 
   const mobileMenuId = 'primary-search-account-menu-mobile';
@@ -101,20 +123,12 @@ export const NavigationBar = () => {
       onClose={handleMobileMenuClose}
     >
       <MenuItem>
-        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="error">
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-      <MenuItem>
         <IconButton
           size="large"
-          aria-label="show 17 new notifications"
+          aria-label={`show ${ notifications.length } new notifications`}
           color="inherit"
         >
-          <Badge badgeContent={17} color="error">
+          <Badge badgeContent={ notifications.length } color="error">
             <NotificationsIcon />
           </Badge>
         </IconButton>
@@ -151,17 +165,12 @@ export const NavigationBar = () => {
           </Link>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="error">
-                <MailIcon />
-              </Badge>
-            </IconButton>
             <IconButton
               size="large"
-              aria-label="show 17 new notifications"
+              aria-label={`show ${ notifications.length } new notifications`}
               color="inherit"
             >
-              <Badge badgeContent={17} color="error">
+              <Badge badgeContent={ notifications.length } color="error">
                 <NotificationsIcon onClick={handleToggleNotification} />
               </Badge>
             </IconButton>
@@ -192,6 +201,7 @@ export const NavigationBar = () => {
         </Toolbar>
       </AppBar>
       {renderMobileMenu}
+      {renderNotificationMenu}
       {renderMenu}
     </Box>
   );
