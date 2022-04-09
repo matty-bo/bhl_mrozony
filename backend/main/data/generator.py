@@ -4,7 +4,7 @@ from datetime import time, date, timedelta
 
 START_DATE = date(2022, 1, 1)
 END_DATE = date(2022, 5, 31)
-
+MEASUREMENT_ID_SEQ = 0
 DELTA = END_DATE - START_DATE
 
 
@@ -23,16 +23,18 @@ def measurements():
 
 
 def generate_day_measurements(watermeter: Watermeter, day: str):
+    global MEASUREMENT_ID_SEQ
     day_list = []
     for i in range(24):
         hour = time(hour=i)
         hour = time.strftime(hour, '%H:%M:%S')
         m = Measurement(**{
-            'id': i,
+            'id': MEASUREMENT_ID_SEQ,
             'watermeter': watermeter,
             'date': day,
             'time': hour,
             'usage': random.random()
         })
         day_list.append(m)
+        MEASUREMENT_ID_SEQ += 1
     return day_list

@@ -64,10 +64,7 @@ def filter_measurements_by_date(
         measurements = [dict(entry) for entry in measurements
                         if get_date_from_string(entry.date) == date(year, month, day)]
 
-    # measurements_mean = mean(m.usage for m in measurements)
-    print(measurements[0])
     measurements_mean = mean(dict(m)['usage'] for m in measurements)
-    # measurements_mean = 10
     measurements = {
         'usage_mean': measurements_mean,
         'region_usage_mean': measurements_mean + 3,
