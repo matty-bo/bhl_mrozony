@@ -24,9 +24,7 @@ def measurements():
 
 def generate_day_measurements(watermeter: Watermeter, day: str):
     day_list = []
-    usage_sum = 0
     for i in range(24):
-        usage_sum += random.random()
         hour = time(hour=i)
         hour = time.strftime(hour, '%H:%M:%S')
         m = Measurement(
@@ -35,7 +33,7 @@ def generate_day_measurements(watermeter: Watermeter, day: str):
                 'watermeter': watermeter,
                 'date': day,
                 'time': hour,
-                'usage': usage_sum
+                'usage': random.random()
             })
         day_list.append(m)
     return day_list
