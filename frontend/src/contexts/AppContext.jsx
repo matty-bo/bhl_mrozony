@@ -1,4 +1,4 @@
-import React, { createContext, useCallback, useState } from "react";
+import React, { createContext, useCallback, useEffect, useState } from "react";
 
 const defaultValue = {
   loggedIn: false,
@@ -23,10 +23,17 @@ export function AppContextProvider({ children }) {
     setLoggedIn(false);
   }, [setLoggedIn]);
 
+  useEffect(() => {
+    const loggedUser = localStorage.getItem("loggedIn");
+    if (loggedUser === "user") {
+      setLoggedIn(true);
+    }
+  }, [setLoggedIn]);
+
   return (
     <Provider
       value={{
-        loggedIn: localStorage.getItem("loggedIn") === "user",
+        loggedIn: loggedIn,
         setLogin,
         logout,
       }}
