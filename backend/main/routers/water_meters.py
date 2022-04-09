@@ -30,6 +30,11 @@ async def get_all_measurements(
     return measurements
 
 
+@router.get('/alerts')
+async def get_alerts(userID: int):
+    return generator.generate_alerts(userID)
+
+
 def get_average_usage(measurements, year, month, day):
     if not any([year, month, day]):
         measurements_mean = mean(m.usage for m in measurements)
