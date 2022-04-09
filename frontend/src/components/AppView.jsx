@@ -6,5 +6,5 @@ import { Main } from "./Main";
 export function AppView() {
   const { loggedIn } = useContext(appContext);
 
-  return !loggedIn ? <Main /> : <Login />
+  return loggedIn ? <Main /> : <Login />
 }
