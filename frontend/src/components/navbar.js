@@ -5,14 +5,15 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import {
   AppBar, Badge, Box, IconButton, Menu, MenuItem, Toolbar, Typography
 } from '@mui/material';
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { appContext } from '../contexts/AppContext';
 
 
 export const NavigationBar = () => {
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
+  const [showNotificationPreview, setShowNotificationPreview] = useState(false);
 
   const { logout } = React.useContext(appContext);
 
@@ -35,6 +36,10 @@ export const NavigationBar = () => {
   const handleLogout = useCallback(() => {
     logout();
   }, [logout])
+
+  const handleToggleNotification = useCallback(() => {
+    setShowNotificationPreview(true);
+  }, [setShowNotificationPreview])
 
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
@@ -61,6 +66,23 @@ export const NavigationBar = () => {
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
       <MenuItem onClick={handleLogout}>Log out</MenuItem>
     </Menu>
+  );
+
+  const title = "sdvskjvd";
+  const content = "dsvh sjkdnvls  vnlskf nblsrtf yg gy hgj hj jh jh jh hj  knbf";
+  const maxTitleWordsCount = 20
+  const maxContentWordsCount = 40;
+
+  const notificationPreview = (
+    <Box>
+      <Typography>
+        {title.length > maxTitleWordsCount ? `${title.slice(0, maxTitleWordsCount)}...`
+          : title}
+      </Typography>
+      <Typography>{content.length > maxContentWordsCount ? `${content.slice(0, maxContentWordsCount)}...`
+        : content}
+      </Typography>
+    </Box>
   );
 
   const mobileMenuId = 'primary-search-account-menu-mobile';
@@ -142,7 +164,7 @@ export const NavigationBar = () => {
               color="inherit"
             >
               <Badge badgeContent={17} color="error">
-                <NotificationsIcon />
+                <NotificationsIcon onClick={handleToggleNotification} />
               </Badge>
             </IconButton>
             <IconButton
