@@ -1,9 +1,9 @@
 from fastapi import FastAPI
-from .routers import watermeters
+from .routers import water_meters
 
 
 app = FastAPI()
-app.include_router(watermeters.router)
+app.include_router(water_meters.router)
 
 
 @app.get("/")

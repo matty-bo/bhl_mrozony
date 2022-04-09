@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 from typing import List, Optional
 from datetime import datetime
-from ..models.watermeters import Measurement, Watermeter
+from ..models.water_meters import Measurement, Watermeter
 from ..data import generator
 from copy import deepcopy
 

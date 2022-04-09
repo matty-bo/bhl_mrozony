@@ -1,4 +1,4 @@
-from ..models.watermeters import Measurement, Watermeter
+from ..models.water_meters import Measurement, Watermeter
 import random
 from datetime import time, date, timedelta
 
