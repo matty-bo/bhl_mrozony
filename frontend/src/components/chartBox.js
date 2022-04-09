@@ -1,11 +1,9 @@
 import { Box, Typography } from '@mui/material';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { userWatermeterId } from '../utils/env';
+import { get } from '../utils/requests';
 import { DashboardBarChart } from './barChart/barChart';
 import { LineChart } from './lineChart/lineChart';
-
-// TODO: remove mocked data
-const getInitialValue = () => 8 + Math.random() * 20;
-const getNextValue = (value) => value + Math.floor(Math.random() * 5);
 
 const InfoBoxTitle = (props) => {
   const { label } = props;
@@ -43,8 +41,22 @@ const UsageInfo = (props) => {
 }
 
 export const ChartBox = (props) => {
-  const initialValue = getInitialValue();
   const { barChart, lineChart } = props;
+
+  const currDate = new Date();
+  const [monthData, setMonthData] = useState(null);
+  const [dailyData, setDailyData] = useState(null);
+  const [year, setYear] = useState(currDate.getFullYear());
+  const [month, setMonth] = useState(currDate.getMonth() + 1 );
+  const [day, setDay] = useState(currDate.getDate());
+
+  useEffect(() => {
+    get(`watermeters/${ userWatermeterId }?year=${ year }&month=${ month }`)
+      .then((resp) => { setMonthData(resp); });
+
+    get(`watermeters/${ userWatermeterId }?year=${ year }&month=${ month }&day=${ day }`)
+      .then((resp) => { setDailyData(resp); });
+  }, [year, month, day]);
 
   return (
     <Box sx={{
@@ -57,38 +69,38 @@ export const ChartBox = (props) => {
       width: '100%'
     }}>
       <InfoBoxTitle label='Zużycie wody'></InfoBoxTitle>
-      {barChart && <Box sx={{ display: 'flex', paddingTop: '10px' }}>
+      {barChart && dailyData && <Box sx={{ display: 'flex', paddingTop: '10px' }}>
         <Box sx={{
           width: '50%'
         }}>
-          <DashboardBarChart></DashboardBarChart>
+          <DashboardBarChart data={dailyData}></DashboardBarChart>
         </Box>
         <Box sx={{
           width: '50%',
           paddingLeft: '20px'
         }}>
           <UsageInfo
-            averageUserValue={initialValue}
-            averageValue={getNextValue(initialValue)}
-            averageRegionValue={getNextValue(initialValue)}>
+            averageUserValue={dailyData.usage_mean}
+            averageValue={dailyData.global_usage_mean}
+            averageRegionValue={dailyData.region_usage_mean}>
           </UsageInfo>
         </Box>
       </Box>}
 
-      {lineChart && <Box sx={{ display: 'flex', paddingTop: '10px' }}>
+      {lineChart && monthData && <Box sx={{ display: 'flex', paddingTop: '10px' }}>
         <Box sx={{
           width: '50%'
         }}>
-          <LineChart></LineChart>
+          <LineChart data={monthData}></LineChart>
         </Box>
         <Box sx={{
           width: '50%',
           paddingLeft: '20px'
         }}>
           <UsageInfo
-            averageUserValue={initialValue}
-            averageValue={getNextValue(initialValue)}
-            averageRegionValue={getNextValue(initialValue)}>
+            averageUserValue={monthData.usage_mean}
+            averageValue={monthData.global_usage_mean}
+            averageRegionValue={monthData.region_usage_mean}>
           </UsageInfo>
         </Box>
       </Box>}

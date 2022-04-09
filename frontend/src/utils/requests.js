@@ -1,9 +1,12 @@
+import { API_URL } from "./env";
+
 export const get = (url) => {
-  return fetch(`${localStorage.getItem('http_server')}${url}`, {
+  return fetch(`${API_URL}${ url }`, {
       method: 'GET',
       headers: {
           'Accept': 'application/json',
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*'
       },
   }).then((response) => {
       if (response.status === 401) {
@@ -14,7 +17,7 @@ export const get = (url) => {
 };
 
 export const post = (url, data) => {
-  return fetch(`${localStorage.getItem('http_server')}${url}`, {
+  return fetch(`${API_URL}${ url }`, {
       method: 'POST',
       headers: {
           'Accept': 'application/json',
@@ -30,11 +33,12 @@ export const post = (url, data) => {
 };
 
 export const put = (url, data) => {
-  return fetch(`${localStorage.getItem('http_server')}${url}`, {
+  return fetch(`${API_URL}${ url }`, {
       method: 'PUT',
       headers: {
           'Accept': 'application/json',
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*'
       },
       body: JSON.stringify(data),
   }).then((response) => {
@@ -46,7 +50,7 @@ export const put = (url, data) => {
 };
 
 export const del = (url, data) => {
-  return fetch(`${localStorage.getItem('http_server')}${url}`, {
+  return fetch(`${API_URL}${ url }`, {
       method: 'DELETE',
       headers: {
           'Accept': 'application/json',
