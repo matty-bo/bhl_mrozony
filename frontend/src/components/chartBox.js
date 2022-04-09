@@ -50,13 +50,18 @@ export const ChartBox = (props) => {
 
   
   const UsageInfo = (props) => {
-    const { averageValue, averageRegionValue, averageUserValue, hasCalendar } = props;
+    const { data, sumType, hasCalendar } = props
+    const { usage_mean, region_usage_mean, global_usage_mean, usages } = data;
+    const totalUsage = usages.reduce((acc, el) => {
+      return acc + el.usage;
+    }, 0)
+
     return (
       <Box>
         {hasCalendar &&
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DatePicker
-              label="Basic example"
+              label="Wybierz dzień"
               value={date.date}
               onChange={(newValue) => {
                 setDate({
@@ -71,14 +76,18 @@ export const ChartBox = (props) => {
           </LocalizationProvider>
         }
 
+
         <Typography sx={{ fontWeight: '500', margin: '.5em 0' }}>
-          {`Średnie zużycie godzinowe: ${averageUserValue.toFixed(2)}`}
+          {`${ sumType } zużycie wody: ${totalUsage.toFixed(2)}m³`}
         </Typography>
         <Typography sx={{ fontWeight: '500', margin: '.5em 0' }}>
-          {`Średnie zużycie godzinowe (w twojej okolicy): ${averageRegionValue.toFixed(2)}`}
+          {`Średnie zużycie godzinowe: ${usage_mean.toFixed(2)}m³`}
         </Typography>
         <Typography sx={{ fontWeight: '500', margin: '.5em 0' }}>
-          {`Średnie zużycie godzinowe (ogólnie): ${averageValue.toFixed(2)}`}
+          {`Średnie zużycie godzinowe w regionie: ${region_usage_mean.toFixed(2)}m³`}
+        </Typography>
+        <Typography sx={{ fontWeight: '500', margin: '.5em 0' }}>
+          {`Średnie zużycie godzinowe ogólnie: ${global_usage_mean.toFixed(2)}m³`}
         </Typography>
       </Box>
     );
@@ -105,11 +114,7 @@ export const ChartBox = (props) => {
           width: '50%',
           paddingLeft: '20px'
         }}>
-          <UsageInfo
-            averageUserValue={dailyData.usage_mean}
-            averageValue={dailyData.global_usage_mean}
-            averageRegionValue={dailyData.region_usage_mean}
-            hasCalendar>
+          <UsageInfo data={dailyData} sumType="Dobowe" hasCalendar>
           </UsageInfo>
         </Box>
       </Box>}
@@ -124,10 +129,7 @@ export const ChartBox = (props) => {
           width: '50%',
           paddingLeft: '20px'
         }}>
-          <UsageInfo
-            averageUserValue={monthData.usage_mean}
-            averageValue={monthData.global_usage_mean}
-            averageRegionValue={monthData.region_usage_mean}>
+          <UsageInfo data={monthData} sumType="Miesięczne">
           </UsageInfo>
         </Box>
       </Box>}
