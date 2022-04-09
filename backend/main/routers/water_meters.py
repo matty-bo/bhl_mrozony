@@ -1,6 +1,8 @@
+from functools import reduce
+from statistics import mean
 from fastapi import APIRouter
 from typing import List, Optional
-from datetime import date
+from datetime import date, time
 from calendar import monthrange
 from ..models.water_meters import Measurement, Watermeter
 from ..data import generator
@@ -44,7 +46,7 @@ def get_measurements():
 
 
 def filter_measurements_by_date(
-    measurements: List[Measurement],
+    measurements: List,
     year: Optional[int] = None,
     month: Optional[int] = None,
     day: Optional[int] = None
@@ -59,15 +61,19 @@ def filter_measurements_by_date(
                         get_date_from_string(entry.date).month == month]
         measurements = aggregate_by_day(measurements, year, month)
     if year and month and day:
-        measurements = [entry for entry in measurements
+        measurements = [dict(entry) for entry in measurements
                         if get_date_from_string(entry.date) == date(year, month, day)]
-        measurements = [
-            {
-                'time': entry.time,
-                'usage': entry.usage,
-            }
-            for entry in measurements
-        ]
+
+    # measurements_mean = mean(m.usage for m in measurements)
+    print(measurements[0])
+    measurements_mean = mean(dict(m)['usage'] for m in measurements)
+    # measurements_mean = 10
+    measurements = {
+        'usage_mean': measurements_mean,
+        'region_usage_mean': measurements_mean + 3,
+        'global_usage_mean': measurements_mean + 1,
+        'usages': measurements
+    }
     return measurements
 
 
