@@ -14,12 +14,24 @@ export function AppContextProvider({ children }) {
   const [loggedIn, setLoggedIn] = useState(false);
 
   const setLogin = useCallback(() => {
+    localStorage.setItem("loggedIn", "user");
     setLoggedIn(true);
   }, [setLoggedIn]);
 
   const logout = useCallback(() => {
+    localStorage.removeItem("loggedIn");
     setLoggedIn(false);
   }, [setLoggedIn]);
 
-  return <Provider value={{ loggedIn, setLogin, logout }}>{children}</Provider>;
+  return (
+    <Provider
+      value={{
+        loggedIn: localStorage.getItem("loggedIn") === "user",
+        setLogin,
+        logout,
+      }}
+    >
+      {children}
+    </Provider>
+  );
 }
