@@ -2,6 +2,9 @@ import AssignmentIcon from '@mui/icons-material/Assignment';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import LayersIcon from '@mui/icons-material/Layers';
+import MailIcon from '@mui/icons-material/Mail';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import OtherHousesIcon from '@mui/icons-material/OtherHouses';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
@@ -38,7 +41,7 @@ export const MainListItems = () => (
     <Link to='/spongeHouse'>
       <ListItemButton>
         <ListItemIcon>
-          <LayersIcon />
+          <OtherHousesIcon />
         </ListItemIcon>
         <ListItemText primary="Sponge House" />
       </ListItemButton>
@@ -47,7 +50,7 @@ export const MainListItems = () => (
     <Link to='/notifications'>
       <ListItemButton>
         <ListItemIcon>
-          <LayersIcon />
+          <NotificationsIcon />
         </ListItemIcon>
         <ListItemText primary="Powiadomienia" />
       </ListItemButton>
@@ -55,17 +58,9 @@ export const MainListItems = () => (
     <Link to='/messages'>
       <ListItemButton>
         <ListItemIcon>
-          <LayersIcon />
+          <MailIcon />
         </ListItemIcon>
         <ListItemText primary="Wiadomości" />
-      </ListItemButton>
-    </Link>
-    <Link to='/profile-settings'>
-      <ListItemButton>
-        <ListItemIcon>
-          <LayersIcon />
-        </ListItemIcon>
-        <ListItemText primary="Profil" />
       </ListItemButton>
     </Link>
   </React.Fragment>
