@@ -89,17 +89,19 @@ export const NavigationBar = () => {
       onClose={handleMenuClose}
     >
       {notifications.slice(0,3).map((notif, i) => 
-        <MenuItem key={i}>
-          <Box>
-            <Typography sx={{ fontWeight: '600' }}>
-              {notif.title.length > maxTitleWordsCount ? `${notif.title.slice(0, maxTitleWordsCount)}...`
-                : notif.title}
-            </Typography>
-            <Typography sx={{ fontWeight: '200', fontSize: '.9em' }}>{notif.data.length > maxContentWordsCount ? `${notif.data.slice(0, maxContentWordsCount)}...`
-              : notif.data}
-            </Typography>
-          </Box>
-        </MenuItem>
+        <Link to='/notifications'>
+          <MenuItem key={i}>
+            <Box>
+              <Typography sx={{ fontWeight: '600' }}>
+                {notif.title.length > maxTitleWordsCount ? `${notif.title.slice(0, maxTitleWordsCount)}...`
+                  : notif.title}
+              </Typography>
+              <Typography sx={{ fontWeight: '200', fontSize: '.9em' }}>{notif.data.length > maxContentWordsCount ? `${notif.data.slice(0, maxContentWordsCount)}...`
+                : notif.data}
+              </Typography>
+            </Box>
+          </MenuItem>
+        </Link>
       )}
     </Menu>
   );
