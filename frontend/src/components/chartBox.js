@@ -1,5 +1,5 @@
-import React from 'react';
 import { Box, Typography } from '@mui/material';
+import React from 'react';
 import { DashboardBarChart } from './barChart/barChart';
 import { LineChart } from './lineChart/lineChart';
 
@@ -8,7 +8,7 @@ const getInitialValue = () => 8 + Math.random() * 20;
 const getNextValue = (value) => value + Math.floor(Math.random() * 5);
 
 const InfoBoxTitle = (props) => {
-  const {label} = props;
+  const { label } = props;
 
   return (
     <Typography sx={{
@@ -25,18 +25,18 @@ const InfoBoxTitle = (props) => {
 }
 
 const UsageInfo = (props) => {
-  const {averageValue, averageRegionValue, averageUserValue} = props;
+  const { averageValue, averageRegionValue, averageUserValue } = props;
 
   return (
     <Box>
-      <Typography sx={{ fontWeight: '500', margin: '.5em 0'  }}>
-        { `Średnie zużycie godzinowe: ${ averageUserValue.toFixed(2) }` }
+      <Typography sx={{ fontWeight: '500', margin: '.5em 0' }}>
+        {`Średnie zużycie godzinowe: ${averageUserValue.toFixed(2)}`}
       </Typography>
       <Typography sx={{ fontWeight: '500', margin: '.5em 0' }}>
-        { `Średnie zużycie godzinowe (w twojej okolicy): ${ averageRegionValue.toFixed(2) }` }
+        {`Średnie zużycie godzinowe (w twojej okolicy): ${averageRegionValue.toFixed(2)}`}
       </Typography>
-      <Typography sx={{ fontWeight: '500', margin: '.5em 0'  }}>
-        { `Średnie zużycie godzinowe (ogólnie): ${ averageValue.toFixed(2) }` }
+      <Typography sx={{ fontWeight: '500', margin: '.5em 0' }}>
+        {`Średnie zużycie godzinowe (ogólnie): ${averageValue.toFixed(2)}`}
       </Typography>
     </Box>
   );
@@ -44,14 +44,13 @@ const UsageInfo = (props) => {
 
 export const ChartBox = (props) => {
   const initialValue = getInitialValue();
-  const {barChart, lineChart} = props;
+  const { barChart, lineChart } = props;
 
-  return(
+  return (
     <Box sx={{
-      color: '#ffffff',
       borderRadius: '8px',
-      border: 'solid 1px #1976d2',
-      backgroundColor: 'rgba(25, 118, 210, 0.5)',
+      boxShadow: (theme) => `0 0 5px ${theme.greyColor}`,
+      backgroundColor: (theme) => `${theme.lightGreyColor}`,
       minHeight: 120,
       margin: '15px',
       padding: '15px',
@@ -76,7 +75,7 @@ export const ChartBox = (props) => {
         </Box>
       </Box>}
 
-      { lineChart && <Box sx={{ display: 'flex', paddingTop: '10px' }}>
+      {lineChart && <Box sx={{ display: 'flex', paddingTop: '10px' }}>
         <Box sx={{
           width: '50%'
         }}>
