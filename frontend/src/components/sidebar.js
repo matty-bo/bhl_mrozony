@@ -1,12 +1,12 @@
-import * as React from 'react';
+import AssignmentIcon from '@mui/icons-material/Assignment';
+import BarChartIcon from '@mui/icons-material/BarChart';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import LayersIcon from '@mui/icons-material/Layers';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import ListSubheader from '@mui/material/ListSubheader';
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import BarChartIcon from '@mui/icons-material/BarChart';
-import LayersIcon from '@mui/icons-material/Layers';
-import AssignmentIcon from '@mui/icons-material/Assignment';
+import * as React from 'react';
 import { Link } from 'react-router-dom';
 
 export const MainListItems = () => (
@@ -33,6 +33,31 @@ export const MainListItems = () => (
           <LayersIcon />
         </ListItemIcon>
         <ListItemText primary="Jakość Wody" />
+      </ListItemButton>
+    </Link>
+    <div style={{ flex: 1 }}></div>
+    <Link to='/notifications'>
+      <ListItemButton>
+        <ListItemIcon>
+          <LayersIcon />
+        </ListItemIcon>
+        <ListItemText primary="Powiadomienia" />
+      </ListItemButton>
+    </Link>
+    <Link to='/messages'>
+      <ListItemButton>
+        <ListItemIcon>
+          <LayersIcon />
+        </ListItemIcon>
+        <ListItemText primary="Wiadomości" />
+      </ListItemButton>
+    </Link>
+    <Link to='/profile-settings'>
+      <ListItemButton>
+        <ListItemIcon>
+          <LayersIcon />
+        </ListItemIcon>
+        <ListItemText primary="Profil" />
       </ListItemButton>
     </Link>
   </React.Fragment>
