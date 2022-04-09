@@ -1,12 +1,13 @@
 from statistics import mean
 from fastapi import APIRouter
 from typing import List, Optional
-from datetime import date
+from datetime import date, time
 from calendar import monthrange
 from ..models.water_meters import Watermeter
 from ..data import generator
 from copy import deepcopy
 import random
+random.seed(100)
 
 
 router = APIRouter(
@@ -24,8 +25,79 @@ async def get_all_measurements(
         day: Optional[int] = None
 ):
     measurements = get_measurements()
-    measurements = filter_measurements_by_date(measurements, year, month, day)
+    measurements = get_average_usage(measurements, year, month, day)
+
     return measurements
+
+
+def get_average_usage(measurements, year, month, day):
+    if not any([year, month, day]):
+        measurements_mean = mean(m.usage for m in measurements)
+        measurements = {
+            'usage_mean': measurements_mean,
+            'region_usage_mean': measurements_mean + random.random() * 3,
+            'global_usage_mean': measurements_mean + random.random(),
+        }
+        return measurements
+
+    if year and not month and not day:
+        measurements = [entry for entry in measurements
+                        if get_date_from_string(entry.date).year == year]
+        month_means = []
+        for m in range(1, 13):
+            month_usages = [entry.usage for entry in measurements
+                            if get_date_from_string(entry.date).month == m]
+
+            if not month_usages:
+                month_mean = 0
+            else:
+                month_mean = mean(month_usages)
+            month_means.append({
+                'month': m,
+                'usage_mean': month_mean,
+                'region_usage_mean': month_mean + random.random() * 3,
+                'global_usage_mean': month_mean + random.random(),
+            })
+        return month_means
+    if year and month and not day:
+        measurements = [entry for entry in measurements
+                        if get_date_from_string(entry.date).year == year and
+                        get_date_from_string(entry.date).month == month]
+        day_means = []
+        day_in_months = monthrange(year, month)[1]
+        for d in range(1, day_in_months + 1):
+            day_usages = [entry.usage for entry in measurements
+                          if get_date_from_string(entry.date).month == d]
+            if not day_usages:
+                day_mean = 0
+            else:
+                day_mean = mean(day_usages)
+            day_means.append({
+                'day': d,
+                'usage_mean': day_mean,
+                'region_usage_mean': day_mean + random.random() * 3,
+                'global_usage_mean': day_mean + random.random(),
+            })
+        return day_means
+    if year and month and day:
+        measurements = [dict(entry) for entry in measurements
+                        if get_date_from_string(entry.date) == date(year, month, day)]
+        hour_means = []
+        for h in range(24):
+            time_h = time(h, 0, 0)
+            hour_usages = [entry.usage for entry in measurements
+                           if (entry['time']) == time_h]
+            if not hour_usages:
+                hour_mean = 0
+            else:
+                hour_mean = mean(hour_usages)
+            hour_means.append({
+                'hour': time.strftime(time_h, '%H:%M:%S'),
+                'usage_mean': hour_mean,
+                'region_usage_mean': hour_mean + random.random() * 3,
+                'global_usage_mean': hour_mean + random.random(),
+            })
+        return hour_means
 
 
 @router.get("/{watermeter_id}")
@@ -37,7 +109,8 @@ async def get_watermeter_measurements(
 ):
     w = Watermeter(id=watermeter_id)
     measurements = get_watermeter_measurements(w)
-    measurements = filter_measurements_by_date(measurements, year, month, day)
+    measurements = aggregate_water_measurements_by_date(
+        measurements, year, month, day)
     return measurements
 
 
@@ -45,7 +118,7 @@ def get_measurements():
     return deepcopy(MEASUREMENTS)
 
 
-def filter_measurements_by_date(
+def aggregate_water_measurements_by_date(
     measurements: List,
     year: Optional[int] = None,
     month: Optional[int] = None,
