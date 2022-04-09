@@ -10,6 +10,7 @@ import { MessagesView } from "./messages/MessaagesView";
 import { NavigationBar } from "./navbar";
 import { NotificationsView } from "./notifications/NotificationsView";
 import { MainListItems } from "./sidebar";
+import { SpongeHouse } from "../sites/spongeHouse/spongeHouse";
 
 export function Main() {
   return (
@@ -31,11 +32,8 @@ export function Main() {
             <Route exact path="/dashboard" element={<Dashboard />}></Route>
             <Route exact path="/regionData" element={<Dashboard />}></Route>
             <Route exact path="/waterQuality" element={<Dashboard />}></Route>
-            <Route
-              exact
-              path="/notifications"
-              element={<NotificationsView />}
-            />
+            <Route exact path="/spongeHouse" element={<SpongeHouse />}></Route>
+            <Route exact path="/notifications" element={<NotificationsView />} />
             <Route exact path="/messages" element={<MessagesView />} />
           </Routes>
         </Box>

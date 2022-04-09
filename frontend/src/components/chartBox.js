@@ -51,7 +51,7 @@ export const ChartBox = (props) => {
       borderRadius: '8px',
       boxShadow: (theme) => `0 0 5px ${theme.greyColor}`,
       backgroundColor: (theme) => `${theme.lightGreyColor}`,
-      minHeight: 120,
+      minHeight: '120px',
       margin: '15px',
       padding: '15px',
       width: '100%'
