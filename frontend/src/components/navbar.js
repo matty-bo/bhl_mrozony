@@ -90,7 +90,7 @@ export const NavigationBar = () => {
       onClose={handleMenuClose}
     >
       {notifications.slice(0,3).map((notif, i) => 
-        <MenuItem>
+        <MenuItem key={i}>
           <Box>
             <Typography sx={{ fontWeight: '600' }}>
               {notif.title.length > maxTitleWordsCount ? `${notif.title.slice(0, maxTitleWordsCount)}...`
