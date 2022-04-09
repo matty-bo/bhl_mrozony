@@ -1,6 +1,8 @@
 from ..models.water_meters import Measurement, Watermeter
-import random
 from datetime import time, date, timedelta
+import random
+
+random.seed(100)
 
 START_DATE = date(2022, 1, 1)
 END_DATE = date(2022, 5, 31)
