@@ -17,8 +17,8 @@ export function NotificationsView() {
   return (
     <Box sx={{ display: "flex", flexDirection: "column" }}>
       {notifications.length > 0 ? (
-        notifications.map((notification) => (
-          <Notification notification={notification} />
+        notifications.map((notification, i) => (
+          <Notification key={i} notification={notification} />
         ))
       ) : (
         <Typography variant="h6" sx={{ p: "10px" }}>

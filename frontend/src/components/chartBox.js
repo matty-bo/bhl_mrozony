@@ -1,4 +1,7 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, TextField } from '@mui/material';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import React, { useEffect, useState } from 'react';
 import { userWatermeterId } from '../utils/env';
 import { get } from '../utils/requests';
@@ -22,41 +25,64 @@ const InfoBoxTitle = (props) => {
   );
 }
 
-const UsageInfo = (props) => {
-  const { averageValue, averageRegionValue, averageUserValue } = props;
-
-  return (
-    <Box>
-      <Typography sx={{ fontWeight: '500', margin: '.5em 0' }}>
-        {`Średnie zużycie godzinowe: ${averageUserValue.toFixed(2)}`}
-      </Typography>
-      <Typography sx={{ fontWeight: '500', margin: '.5em 0' }}>
-        {`Średnie zużycie godzinowe (w twojej okolicy): ${averageRegionValue.toFixed(2)}`}
-      </Typography>
-      <Typography sx={{ fontWeight: '500', margin: '.5em 0' }}>
-        {`Średnie zużycie godzinowe (ogólnie): ${averageValue.toFixed(2)}`}
-      </Typography>
-    </Box>
-  );
-}
-
 export const ChartBox = (props) => {
   const { barChart, lineChart } = props;
 
   const currDate = new Date();
+  const [date, setDate] = useState({
+    year: currDate.getFullYear(),
+    month: currDate.getMonth() + 1,
+    day: currDate.getDate(),
+    date: currDate
+  });
   const [monthData, setMonthData] = useState(null);
   const [dailyData, setDailyData] = useState(null);
-  const [year, setYear] = useState(currDate.getFullYear());
-  const [month, setMonth] = useState(currDate.getMonth() + 1 );
-  const [day, setDay] = useState(currDate.getDate());
 
   useEffect(() => {
+    const {day, month, year} = date;
+
     get(`watermeters/${ userWatermeterId }?year=${ year }&month=${ month }`)
       .then((resp) => { setMonthData(resp); });
 
     get(`watermeters/${ userWatermeterId }?year=${ year }&month=${ month }&day=${ day }`)
       .then((resp) => { setDailyData(resp); });
-  }, [year, month, day]);
+  }, [date]);
+
+  
+  const UsageInfo = (props) => {
+    const { averageValue, averageRegionValue, averageUserValue, hasCalendar } = props;
+    return (
+      <Box>
+        {hasCalendar &&
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <DatePicker
+              label="Basic example"
+              value={date.date}
+              onChange={(newValue) => {
+                setDate({
+                  year: newValue.getFullYear(),
+                  month: newValue.getMonth() + 1,
+                  day: newValue.getDate(),
+                  date: newValue
+                });
+              }}
+              renderInput={(params) => <TextField {...params} />}
+            />
+          </LocalizationProvider>
+        }
+
+        <Typography sx={{ fontWeight: '500', margin: '.5em 0' }}>
+          {`Średnie zużycie godzinowe: ${averageUserValue.toFixed(2)}`}
+        </Typography>
+        <Typography sx={{ fontWeight: '500', margin: '.5em 0' }}>
+          {`Średnie zużycie godzinowe (w twojej okolicy): ${averageRegionValue.toFixed(2)}`}
+        </Typography>
+        <Typography sx={{ fontWeight: '500', margin: '.5em 0' }}>
+          {`Średnie zużycie godzinowe (ogólnie): ${averageValue.toFixed(2)}`}
+        </Typography>
+      </Box>
+    );
+  }
 
   return (
     <Box sx={{
@@ -82,7 +108,8 @@ export const ChartBox = (props) => {
           <UsageInfo
             averageUserValue={dailyData.usage_mean}
             averageValue={dailyData.global_usage_mean}
-            averageRegionValue={dailyData.region_usage_mean}>
+            averageRegionValue={dailyData.region_usage_mean}
+            hasCalendar>
           </UsageInfo>
         </Box>
       </Box>}

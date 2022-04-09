@@ -10,7 +10,6 @@ const dataToColors = (data) => {
 
 export const DashboardBarChart = (props) => {
   const data = props.data.usages;
-  console.log(data);
 
   return(
     <Chart
